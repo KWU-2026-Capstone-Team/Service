@@ -1,0 +1,12 @@
+# CPU/CUDA torch installation may be selected using the official PyTorch index.
+torch==2.2.2
+torchvision==0.17.2
+facenet-pytorch==2.6.0
+timm==1.0.15
+numpy==1.26.4
+Pillow==10.2.0
+# Use this OpenCV version for NumPy 1 compatibility; do not install requirements.txt here.
+opencv-python==4.10.0.84
+fastapi==0.136.1
+uvicorn==0.46.0
+python-multipart==0.0.28

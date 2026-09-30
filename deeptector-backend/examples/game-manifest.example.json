@@ -1,0 +1,13 @@
+[
+  {
+    "id": "replace-with-curated-clip-id",
+    "video_path": "clips/verified-clip.mp4",
+    "label": "FAKE",
+    "spatial": 0.918,
+    "temporal": 0.528,
+    "model_version": "replace-with-actual-analysis-model-version",
+    "explanation": "실제 분석 결과의 브랜치 반응 설명을 입력하세요.",
+    "source": "replace-with-verified-ground-truth-provenance",
+    "license": "replace-with-distribution-permission"
+  }
+]
