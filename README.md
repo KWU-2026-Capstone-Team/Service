@@ -1,6 +1,6 @@
 # DeepTector 서비스
 
-이 저장소의 `main`은 DeepTector UI 프로토타입과 서비스 백엔드를 관리합니다. 서비스 구현은 `anseonghwan/deeptector`의 `service/prototype-backend`에서 가져왔으며, 모델 연구/학습 코드와 가중치는 포함하지 않습니다. 기존 서비스 방향 결정 회의 PDF는 그대로 보존합니다.
+이 저장소의 `main`은 DeepTector UI 프로토타입과 서비스 백엔드를 관리합니다.
 
 ## 포함된 파일
 
