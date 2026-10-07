@@ -21,7 +21,9 @@ git clone --branch main --single-branch https://github.com/KWU-2026-Capstone-Tea
 cd Service
 ```
 
-화면은 `prototype/prototype-version.html`을 브라우저로 열어 확인합니다. 이는 정적 시연 파일이며 API가 자동 연결되어 있지는 않습니다.
+실제 API 연동 화면은 https://kwu-2026-capstone-team.github.io/Service/ 입니다. **현재 PC에서 백엔드를 실행해야** 연결됩니다. [로컬 demo 실행 안내](deeptector-backend/docs/LOCAL_DEMO.md)를 따라 API와 worker를 함께 켜세요.
+
+`index.html`과 `web/`는 업로드·상태·결과·이력·삭제·게임 API를 연결합니다. 기본 demo는 고정 시연값이며 게임은 별도 검증 데이터가 필요합니다. `prototype/prototype-version.html`은 기존 정적 시안으로 보존합니다.
 
 백엔드 실행은 [실행 안내](deeptector-backend/README.md)를 따르세요. 모델 파일 없이도 명시적인 `demo` 모드로 API 흐름을 확인할 수 있습니다. demo 응답은 실제 탐지 결과가 아닙니다.
 

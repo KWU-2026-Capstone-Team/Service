@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="referrer" content="no-referrer">
+  <title>DeepTector · 로컬 API 테스트</title>
+  <link rel="stylesheet" href="./web/style.css">
+  <script type="module" src="./web/app.mjs"></script>
+</head>
+<body>
+<header><a class="brand" href="./">D <span>DeepTector</span></a><nav><a href="#analysis">영상 분석</a><a href="#game">AI vs 사람</a><a href="./prototype/prototype-version.html" target="_blank" rel="noopener">기존 화면 시안 ↗</a></nav></header>
+<main>
+  <p class="eyebrow">LOCAL API · FUNCTIONAL PREVIEW</p>
+  <h1>의심스러운 영상,<br>분석 흐름을 직접 확인하세요.</h1>
+  <p class="muted">화면은 GitHub Pages에서, 영상 처리는 <strong>현재 브라우저를 연 PC</strong>에서 실행합니다. GitHub로 영상을 업로드하지 않습니다.</p>
+  <section class="card" aria-labelledby="connectTitle">
+    <h2 id="connectTitle">1. 내 PC 백엔드 연결</h2>
+    <p>백엔드와 worker를 실행한 뒤 연결하세요. 브라우저가 로컬 네트워크/기기 접근을 물으면 이 사이트에 허용하세요.</p>
+    <div class="row"><code>http://127.0.0.1:8000</code><button id="connect">백엔드 연결</button><span id="connection" role="status">연결 전</span></div>
+    <p class="muted">토큰은 같은 탭의 새로고침 동안 유지됩니다. 탭을 닫거나 사이트 데이터를 지우면 기존 분석 접근권을 잃을 수 있습니다. API 연결 성공은 worker 실행을 보장하지 않습니다.</p>
+    <details><summary>처음 실행하는 방법 / 연결이 안 될 때</summary><p>저장소를 최신 상태로 받은 뒤 아래 명령을 PowerShell에서 실행하세요.</p><pre>cd &lt;Service 저장소 경로&gt;\deeptector-backend
+py -3.11 -m venv .venv
+.\.venv\Scripts\python.exe -m pip install -r requirements-lock.txt
+.\.venv\Scripts\python.exe scripts\run_local_demo.py</pre><p>서버는 loopback에만 바인딩됩니다. 방화벽 포트 개방이나 보안 기능 해제는 필요하지 않습니다. 연결 거부 시 서버 로그와 사이트의 로컬 네트워크 권한을 확인하세요.</p><a href="./deeptector-backend/docs/LOCAL_DEMO.md">자세한 실행 안내</a></details>
+  </section>
+  <p id="message" role="status" aria-live="polite"></p>
+  <div class="grid" id="analysis">
+    <section class="card"><h2>2. 영상 업로드</h2><p>로컬 demo 실행기는 최대 50MiB를 허용합니다. 분석 완료·실패 후 업로드 사본을 삭제합니다.</p>
+      <form id="uploadForm"><label for="video">분석할 영상</label><input id="video" type="file" accept=".mp4,.mov,.avi,.mkv,.webm" required><p id="fileInfo" class="muted">선택한 영상이 없습니다.</p><label class="check"><input id="consent" type="checkbox" required> 이 PC의 백엔드에 영상 사본을 저장하고 처리하는 데 동의합니다.</label><button id="upload" disabled>업로드하고 분석</button></form>
+      <p class="notice">DEMO는 영상 형식만 확인하고 고정 점수를 반환합니다. 실제 얼굴 검출·딥페이크 판정·XAI 생성은 하지 않습니다.</p>
+    </section>
+    <section class="card"><div class="row"><h2>내 분석 이력</h2><button id="refresh" class="secondary" disabled>새로고침</button></div><p class="muted">현재 세션의 최근 50건 · 항목을 눌러 결과를 확인하세요.</p><div id="history">백엔드에 연결해 주세요.</div></section>
+  </div>
+  <section class="card" id="detail" hidden aria-labelledby="detailTitle">
+    <div class="row"><h2 id="detailTitle">3. 분석 상태와 결과</h2><button id="delete" class="danger" disabled>이 분석 삭제</button></div>
+    <p id="analysisName"></p><p id="analysisState" role="status"></p><p id="waiting" class="notice" hidden>대기 중에는 worker가 실행 중인지 확인하세요. 페이지를 새로고침해도 서버 작업은 취소되지 않습니다. 완료 또는 실패한 뒤 삭제할 수 있습니다.</p>
+    <div id="result"></div><div id="artifacts" class="grid"></div><details><summary>API 응답 상세</summary><pre id="raw"></pre></details>
+  </section>
+  <section class="card" id="game"><h2>AI vs 사람 · 데이터 등록 후 사용</h2><p>실제 라벨과 사용권이 확인된 게임 영상이 필요합니다. 기본 설치에는 데이터가 없으며 임의의 정답을 만들지 않습니다.</p><div class="row"><label for="rounds">문제 수</label><input id="rounds" type="number" min="1" max="10" value="1"><button id="gameStart" disabled>게임 시작 / 이어하기</button></div><div id="gameBody"></div></section>
+  <footer>모델 신호는 조작 확률이나 법적 증거가 아닙니다. GREEN도 진위를 보장하지 않습니다.</footer>
+</main>
+</body></html>

@@ -4,6 +4,8 @@
 
 ## 실행
 
+GitHub Pages와 이 PC를 연결해 시험하려면 [로컬 demo 안내](docs/LOCAL_DEMO.md)를 먼저 보세요. `scripts/run_local_demo.py`는 Pages CORS 설정과 별도 테스트 저장소를 사용해 API/worker를 한 번에 실행합니다.
+
 Python 3.11을 기준으로 검증합니다. API와 worker는 **같은 DB/저장소/모드 환경 변수**를 사용해야 합니다.
 
 재현용 전체 의존성은 `requirements-lock.txt`(API/테스트)와 `requirements-model-lock.txt`(모델)에 고정했습니다. 아래 설치 명령의 requirements 파일을 해당 lock 파일로 대체하면 검증한 전체 패키지 버전을 재현합니다.
