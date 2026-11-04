@@ -2,6 +2,8 @@
 
 영상 분석 및 AI vs 사람 게임을 위한 독립 백엔드. 기존 모델 저장소 옆에 배치하며 원본 모델 코드는 읽기 전용으로 참조합니다.
 
+**DeepGame 통합판**은 [통합 실행 안내](docs/INTEGRATED_SERVICE.md)를 따르세요. 저장소 루트의 `Start-Service.ps1`로 한 주소에서 화면·API·worker를 실행할 수 있습니다. 아래 Pages demo는 이전 버전 실행 방법입니다.
+
 ## 실행
 
 GitHub Pages와 이 PC를 연결해 시험하려면 [로컬 demo 안내](docs/LOCAL_DEMO.md)를 먼저 보세요. `scripts/run_local_demo.py`는 Pages CORS 설정과 별도 테스트 저장소를 사용해 API/worker를 한 번에 실행합니다.
@@ -54,7 +56,7 @@ API는 가벼운 `.venv`에서 `real` 환경 변수로 실행할 수 있습니�
 - 점수/판정/신호등/모델 버전/보정 버전/프레임 메타데이터 저장
 - 원본 얼굴·입 크롭 및 공간·시간 Grad-CAM 조회
 - 실패 사유, XAI 부분 실패, 만료 정리와 분석 삭제
-- 검증된 게임 영상 등록 CLI, 1~10문제 게임, 답변 잠금 및 서버 채점
+- 게임 영상 등록 CLI, 1~30문제·난이도·균형 출제, 답변 잠금·건너뛰기·서버 콤보 채점·게임 기록
 - SQLite 스키마와 제약조건, 테스트, OpenAPI 및 팀 공유 문서
 
 DB는 지금 바로 실행할 수 있는 SQLite를 구현했습니다. PostgreSQL은 운영 전환 설계 대상으로 [DB 문서](docs/DATABASE.md)에 차이와 변경 지점을 명시했습니다. 환경 변수만 바꾸는 PostgreSQL 런타임 지원은 포함하지 않습니다.

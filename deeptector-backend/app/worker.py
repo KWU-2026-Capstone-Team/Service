@@ -332,6 +332,12 @@ def main() -> None:
     if args.once:
         run_once(settings)
         return
+    from .local_runtime import local_worker
+    with local_worker(settings):
+        _run_loop(settings, args.poll_seconds)
+
+
+def _run_loop(settings, poll_seconds):
     last_cleanup = 0.0
     while True:
         if time.monotonic() - last_cleanup >= 60:
@@ -339,7 +345,7 @@ def main() -> None:
             last_cleanup = time.monotonic()
         processed = run_once(settings)
         if not processed:
-            time.sleep(max(0.1, args.poll_seconds))
+            time.sleep(max(0.1, poll_seconds))
 
 
 if __name__ == "__main__":

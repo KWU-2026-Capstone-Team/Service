@@ -16,3 +16,10 @@ data/
 *.safetensors
 *.log
 codex_session_id.txt
+node_modules/
+.next/
+out/
+*.tsbuildinfo
+.artifacts/
+playwright-report/
+test-results/
