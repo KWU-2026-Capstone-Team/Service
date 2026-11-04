@@ -19,12 +19,15 @@ Base URL `http://127.0.0.1:8000`. 상세 요청 스키마는 `/docs` 및 `/opena
 | GET `/api/v1/analyses/{id}` | 상태·결과·XAI URL | 200 |
 | DELETE `/api/v1/analyses/{id}` | 완료/실패 분석과 파일 삭제 | 204 |
 | GET `/api/v1/analyses/{id}/artifacts/{kind}` | 인증된 이미지 다운로드 | 200 |
-| POST `/api/v1/games` | 게임 생성, JSON `{rounds:10}` | 201 |
+| GET `/api/v1/games` | 현재 세션 게임 이력 | 200 |
+| POST `/api/v1/games` | 게임 생성, JSON `{rounds:10,difficulty:"all"}` (1~30문제) | 201 |
 | GET `/api/v1/games/{id}` | 게임 진행 상태 | 200 |
 | GET `/api/v1/games/{id}/rounds/{n}` | 문제/영상 URL, 제출 후 결과 | 200 |
 | GET `/api/v1/games/{id}/rounds/{n}/video` | 해당 문제 MP4 | 200/206 |
 | POST `/api/v1/games/{id}/rounds/{n}/answer` | 답변·확신도 제출, 즉시 비교 결과 | 200 |
 | GET `/api/v1/games/{id}/result` | 전체 완료 후 점수·문제 분류 | 200 |
+| POST `/api/v1/games/{id}/rounds/{n}/skip` | 영상 재생 실패 기록 후 다음 문항 | 200 |
+| DELETE `/api/v1/games/{id}` | 내 게임 기록 삭제 (진행 중 취소 포함) | 204 |
 
 모델은 worker subprocess에서 로드하므로 model-info의 `loaded=false`는 API에 모델이 로드되지 않았다는 뜻입니다. API readiness는 GPU/worker의 실행 가능성을 보장하지 않습니다.
 
@@ -89,7 +92,12 @@ Base URL `http://127.0.0.1:8000`. 상세 요청 스키마는 `/docs` 및 `/opena
 
 ## 게임
 
-실제 라벨이 확인된 데이터셋은 저장소에 포함되어 있지 않습니다. 운영자가 MP4 및 정답 출처/사용권/AI 점수를 준비해 예시 manifest를 수정한 뒤 등록합니다.
+`GET /api/v1/games?limit=50&offset=0`은 세션의 최신 게임부터 반환합니다. limit은 1~100입니다.
+`time_used_seconds`는 0~86,400초의 유한 숫자만 허용합니다. 모두 건너뛴 결과의 grade는 `N/A`이며 정확도는 null입니다.
+
+통합 실행기의 `GET /health/worker`는 worker heartbeat 준비 상태를 200/503으로 반환합니다. `model_loaded=false`는 모델이 작업별 subprocess에서 실행됨을 뜻합니다. 통합 모드에서 worker가 준비되지 않으면 업로드는 503 `WORKER_UNAVAILABLE`입니다. 중단된 분석은 다음 worker 시작 시 `WORKER_RESTARTED`로 실패 처리됩니다.
+
+게임 영상은 서비스 저장소에 포함하지 않습니다. deepGame 로컬 자료는 `app.import_deepgame`으로 등록하며, 별도 자료는 MP4 및 정답 출처/사용권을 준비해 manifest로 등록합니다. manifest의 AI 점수는 가져오지 않습니다. 실제 평가에는 `app.evaluate_games`를 사용합니다.
 
 ```powershell
 .venv\Scripts\python -m app.game examples/my-game-manifest.json
@@ -97,11 +105,15 @@ Base URL `http://127.0.0.1:8000`. 상세 요청 스키마는 `/docs` 및 `/opena
 
 정답은 운영자가 확인한 ground truth입니다. 모델의 판정 자체를 정답으로 사용하지 않습니다. 데이터가 부족하면 게임 생성은 409 `GAME_DATASET_NOT_READY`입니다. 공개 API로 정답을 등록하거나 수정할 수 없습니다.
 
-답변 body: `{"verdict":"FAKE","confidence":"HIGH"}`. verdict는 REAL/FAKE, confidence는 LOW/MEDIUM/HIGH. 답변 전에는 ground truth와 AI 점수를 응답하지 않습니다. 순서대로 제출해야 하며 동일 답변 재전송은 동일 결과를 반환하고 변경 시 409입니다.
+답변 body: `{"verdict":"FAKE","confidence":"HIGH","time_used_seconds":2.5}`. verdict는 REAL/FAKE, confidence는 LOW/MEDIUM/HIGH(생략 시 MEDIUM). 시간은 신뢰하지 않는 참고 통계이며 점수 계산에 사용하지 않습니다. 답변 전에는 ground truth와 AI 점수를 응답하지 않습니다. 순서대로 제출해야 하며 동일 답변 재전송은 동일 결과를 반환하고 변경 시 409입니다.
 
 전체 결과는 `user_score`, `ai_score`, 0~1 `user_accuracy`, `ai_accuracy`, 문제 번호 배열을 담은 `categories`(human_only, ai_only, both_correct, both_wrong), 라운드별 결과를 반환합니다. 시안의 게임 예시에는 합계가 맞지 않는 수치가 있어 그대로 저장하지 않고 답변으로 계산합니다.
 
 ## 오류와 UI 처리
+
+통합판 게임은 `all/easy/medium/hard` 난이도와 1~30문제를 지원합니다. 영상 수/정답 균형 조건이 부족하면 409입니다. 서버 총점 `score`는 정답일 때 100 + 직전 연속 정답 수 × 10을 합산하며, `user_score`(맞힌 문제 수)와 구별합니다.
+
+영상 재생 실패는 skip body `{"reason":"VIDEO_UNAVAILABLE"}`로 기록합니다. 결과는 `played_rounds`, `skipped_rounds`, `ai_evaluated_rounds`, `grade`, `average_time_seconds`를 포함합니다. 정답률 분모는 건너뛰지 않고 답한 문제이며, 미평가 영상은 AI 비교 분모에서 제외합니다. AI 평가가 없으면 비교값은 null로 표시합니다. 모델 평가값은 게임 생성 시점에 고정하므로 후속 평가가 과거 점수를 바꾸지 않습니다. 게임 삭제는 플레이 기록만 지우고 원본 영상은 남깁니다.
 
 | 상태/코드 | 처리 |
 |---|---|

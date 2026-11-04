@@ -2,6 +2,21 @@
 
 이 저장소의 `main`은 DeepTector UI 프로토타입과 서비스 백엔드를 관리합니다.
 
+## 통합 서비스 (DeepGame + 영상 분석)
+
+`integration/deepgame-service` 브랜치의 통합판은 Next.js 화면과 FastAPI를 **한 로컬 주소**에서 제공합니다. [통합 실행·검증 안내](deeptector-backend/docs/INTEGRATED_SERVICE.md)를 참고하세요. 기존 GitHub Pages 화면은 유지되며 이 브랜치를 만들었다고 자동으로 교체되지 않습니다.
+
+```powershell
+# 이 저장소 루트에서 최초 준비 + 실행
+.\Start-Service.ps1 -Setup
+# 다음부터 실행 (설치/빌드가 끝난 경우)
+.\Start-Service.ps1
+```
+
+브라우저: `http://127.0.0.1:5173/`. 기본 영상 분석은 고정 점수인 demo입니다. 게임은 데이터셋 정답으로 서버 채점하며, 실제 모델 평가가 없는 영상의 AI 비교 점수는 표시하지 않습니다. 게임 영상은 별도 로컬 deepGame 체크아웃에서 등록해야 합니다(정답/영상은 프론트엔드에 포함하지 않음).
+
+이 PC에는 기본 게임 영상 24개를 등록했습니다. 다른 PC에서는 `Import-Game.ps1 -Source '로컬 deepGame 경로'`를 먼저 실행하세요. [통합판 검증 기록](deeptector-backend/docs/INTEGRATION_VERIFICATION.md)에서 실제 확인 범위와 제한을 확인할 수 있습니다.
+
 ## 포함된 파일
 
 | 경로 | 내용 |

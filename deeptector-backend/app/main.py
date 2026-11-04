@@ -285,6 +285,12 @@ def create_app(settings: Settings | None = None) -> FastAPI:
     async def live() -> dict[str, str]:
         return {"status": "ok"}
 
+    @application.get("/health/worker")
+    async def worker_status() -> JSONResponse:
+        from .local_runtime import worker_health
+        health = worker_health(configured)
+        return JSONResponse(status_code=200 if health["ready"] else 503, content=health)
+
     @application.get("/health/ready")
     async def ready() -> JSONResponse:
         checks = {"database": False, "storage": False}
@@ -357,6 +363,9 @@ def create_app(settings: Settings | None = None) -> FastAPI:
         video: Annotated[UploadFile, File(description="Video to analyze")],
         session_id: Annotated[str, Depends(get_session)],
     ) -> AnalysisDetail:
+        from .local_runtime import enabled, worker_health
+        if enabled() and not worker_health(configured)["ready"]:
+            raise _error("WORKER_UNAVAILABLE", "분석 worker를 사용할 수 없습니다. 통합 실행기를 다시 실행하세요.", 503)
         filename = _clean_filename(video.filename)
         suffix = Path(filename).suffix.lower()
         if suffix not in ALLOWED_VIDEO_SUFFIXES:
@@ -553,6 +562,9 @@ def create_app(settings: Settings | None = None) -> FastAPI:
         return schema
 
     application.openapi = openapi_contract
+    from .static_site import mount_frontend
+
+    mount_frontend(application)
     return application
 
 

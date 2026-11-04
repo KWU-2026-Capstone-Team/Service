@@ -27,6 +27,22 @@
         }
       }
     },
+    "/health/worker": {
+      "get": {
+        "summary": "Worker Status",
+        "operationId": "worker_status_health_worker_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        }
+      }
+    },
     "/health/ready": {
       "get": {
         "summary": "Ready",
@@ -380,6 +396,63 @@
       }
     },
     "/api/v1/games": {
+      "get": {
+        "tags": [
+          "game"
+        ],
+        "summary": "List Games",
+        "operationId": "list_games_api_v1_games_get",
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "maximum": 100,
+              "minimum": 1,
+              "default": 50,
+              "title": "Limit"
+            }
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 0,
+              "default": 0,
+              "title": "Offset"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "SessionBearer": []
+          }
+        ]
+      },
       "post": {
         "tags": [
           "game"
@@ -387,14 +460,14 @@
         "summary": "Start Game",
         "operationId": "start_game_api_v1_games_post",
         "requestBody": {
+          "required": true,
           "content": {
             "application/json": {
               "schema": {
                 "$ref": "#/components/schemas/StartGame"
               }
             }
-          },
-          "required": true
+          }
         },
         "responses": {
           "201": {
@@ -450,6 +523,44 @@
                 "schema": {}
               }
             }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "SessionBearer": []
+          }
+        ]
+      },
+      "delete": {
+        "tags": [
+          "game"
+        ],
+        "summary": "Delete Game",
+        "operationId": "delete_game_api_v1_games__game_id__delete",
+        "parameters": [
+          {
+            "name": "game_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Game Id"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Successful Response"
           },
           "422": {
             "description": "Validation Error",
@@ -610,6 +721,70 @@
             "application/json": {
               "schema": {
                 "$ref": "#/components/schemas/Answer"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "SessionBearer": []
+          }
+        ]
+      }
+    },
+    "/api/v1/games/{game_id}/rounds/{ordinal}/skip": {
+      "post": {
+        "tags": [
+          "game"
+        ],
+        "summary": "Skip Round",
+        "operationId": "skip_round_api_v1_games__game_id__rounds__ordinal__skip_post",
+        "parameters": [
+          {
+            "name": "game_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Game Id"
+            }
+          },
+          {
+            "name": "ordinal",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "title": "Ordinal"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Skip"
               }
             }
           }
@@ -849,13 +1024,26 @@
               "MEDIUM",
               "HIGH"
             ],
-            "title": "Confidence"
+            "title": "Confidence",
+            "default": "MEDIUM"
+          },
+          "time_used_seconds": {
+            "anyOf": [
+              {
+                "type": "number",
+                "maximum": 86400.0,
+                "minimum": 0.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Time Used Seconds"
           }
         },
         "type": "object",
         "required": [
-          "verdict",
-          "confidence"
+          "verdict"
         ],
         "title": "Answer"
       },
@@ -1147,14 +1335,39 @@
         ],
         "title": "SessionResponse"
       },
+      "Skip": {
+        "properties": {
+          "reason": {
+            "type": "string",
+            "const": "VIDEO_UNAVAILABLE",
+            "title": "Reason"
+          }
+        },
+        "type": "object",
+        "required": [
+          "reason"
+        ],
+        "title": "Skip"
+      },
       "StartGame": {
         "properties": {
           "rounds": {
             "type": "integer",
-            "maximum": 10.0,
+            "maximum": 30.0,
             "minimum": 1.0,
             "title": "Rounds",
             "default": 10
+          },
+          "difficulty": {
+            "type": "string",
+            "enum": [
+              "all",
+              "easy",
+              "medium",
+              "hard"
+            ],
+            "title": "Difficulty",
+            "default": "all"
           }
         },
         "type": "object",

@@ -1,5 +1,17 @@
 # DB 스키마 설계
 
+## 2026-11-04 DeepGame 통합 확장
+
+게임 스키마 업그레이드는 `app/game_migrations.py`가 담당합니다. 기존 분석/세션과 게임 레코드를 유지하면서 게임 테이블을 확장합니다. 통합 실행기의 기본 DB는 `data/integrated/deeptector.sqlite3`로, 이전 테스트 DB와 별개입니다.
+
+- `game_clips`: 난이도, 조작 기법, 확인된 단서(cues), 일반 판별 요령(tips), 출처/사용권 검토 여부.
+- `game_clip_evaluations`: 클립+모델 버전별 공간/시간 평가. 평가 없는 클립도 훈련 출제 가능하며 점수를 꾸며내지 않습니다.
+- `games`: 난이도, 서버 총점, 최대 콤보, 완료 시점. 문제 수 상한은 30.
+- `game_rounds`: 서버 획득 점수/콤보, 참고용 응답 시간, skip 상태, 생성 시점의 모델 평가 스냅샷.
+- 세션 삭제는 소유 게임/라운드를 연쇄 삭제합니다. 게임 삭제는 여러 사람이 공유하는 클립 원본이나 평가를 삭제하지 않습니다.
+
+기존 아래 관계도/설명은 초기 구조의 개요입니다. 통합판 필드와 제약의 정확한 정의는 `migrations/002_games.sql`을 기준으로 합니다. 운영 DB 마이그레이션 전에는 반드시 별도 백업을 보관하세요.
+
 실행 DDL: `migrations/schema.sql`, `migrations/002_games.sql`. API 시작 시 idempotent 초기화를 실행합니다. 현재 운영 엔진은 Python 내장 SQLite이며 DB 파일은 `data/deeptector.sqlite3`입니다.
 
 ## 관계
