@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="theme-color" content="#F7F9FC" />
+    <meta name="description" content="누구나 쉽게 이해하는 딥페이크 의심 신호 확인 앱 VeriVid" />
+    <title>VeriVid</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <header class="app-header" id="appHeader">
+        <button class="brand" data-route="home" aria-label="VeriVid 홈으로 이동">
+          <span class="brand-mark" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><path d="M12 2 4.5 5v5.8c0 4.7 3.1 9 7.5 10.2 4.4-1.2 7.5-5.5 7.5-10.2V5L12 2Z"/><path d="m8.8 11.8 2.1 2.1 4.5-4.7"/></svg>
+          </span>
+          <span>VeriVid</span>
+        </button>
+        <label class="easy-toggle" for="easyMode">
+          <span>쉬운 설명</span>
+          <input id="easyMode" type="checkbox" role="switch" />
+          <span class="toggle-track" aria-hidden="true"><span></span></span>
+        </label>
+      </header>
+
+      <main id="app" tabindex="-1"></main>
+
+      <nav class="bottom-nav" aria-label="주요 메뉴">
+        <button class="nav-item is-active" data-route="home" aria-current="page">
+          <span data-icon="home"></span><span>홈</span>
+        </button>
+        <button class="nav-item" data-route="history">
+          <span data-icon="history"></span><span>분석 기록</span>
+        </button>
+        <button class="nav-item" data-route="help">
+          <span data-icon="help"></span><span>도움말</span>
+        </button>
+      </nav>
+    </div>
+
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+    <script src="app.js"></script>
+  </body>
+</html>

@@ -1,0 +1,18 @@
+*.iml
+.gradle/
+/local.properties
+/.idea/
+/build/
+/app/build/
+captures/
+/outputs/
+*.apk
+*.aab
+*.jks
+*.keystore
+.env
+.env.*
+*.log
+# Service ignores all data/ directories; these contain Kotlin source, not runtime data.
+!/app/src/main/java/com/verivid/app/data/
+!/app/src/test/java/com/verivid/app/data/

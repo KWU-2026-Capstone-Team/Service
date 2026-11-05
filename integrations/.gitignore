@@ -1,0 +1,5 @@
+# Reference checkouts contain large team model binaries; do not vendor or push them.
+/AI-Generated-Media-Detection/
+/Service/
+/deepGame-reference/
+/local-runtime/

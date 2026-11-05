@@ -1,0 +1,6 @@
+<resources>
+    <string name="app_name">VeriVid</string>
+    <string name="capture_channel_name">화면 녹화</string>
+    <string name="capture_ready">화면 녹화 준비됨</string>
+    <string name="capture_recording">VeriVid가 화면을 녹화하고 있어요</string>
+</resources>
