@@ -1,0 +1,174 @@
+{
+  "model_version": "dual-branch-d28bda40d902b7d0",
+  "source": "Actual team-model evaluations measured on 2026-11-05; not dataset ground truth",
+  "evaluations": [
+    {
+      "clip_id": "fake_easy_001",
+      "spatial": 0.929612684249878,
+      "temporal": 0.9699008372742766,
+      "evaluated_at": "2026-11-05T12:51:36.367382+00:00",
+      "video_sha256": "7e4316ddc138cee07e60867f149d8e9a0590b1ec641b3743c3e561ad0249017b"
+    },
+    {
+      "clip_id": "fake_easy_002",
+      "spatial": 0.7604045093059539,
+      "temporal": 0.9965478848732012,
+      "evaluated_at": "2026-11-05T12:52:03.656283+00:00",
+      "video_sha256": "f14e4d9db3a842787686a88bda2c532213b93123c20e6465ef0f3e41f4aad014"
+    },
+    {
+      "clip_id": "fake_easy_003",
+      "spatial": 0.8570628643035889,
+      "temporal": 0.9483422666461655,
+      "evaluated_at": "2026-11-05T12:52:29.838980+00:00",
+      "video_sha256": "742d15d1015e7164ef834dacf3f9df04dda18594f1fc69a5c2f026e717f6fb92"
+    },
+    {
+      "clip_id": "fake_easy_004",
+      "spatial": 0.4945799678564072,
+      "temporal": 0.9965478848732012,
+      "evaluated_at": "2026-11-05T12:53:01.744050+00:00",
+      "video_sha256": "87cf788996377a51196c73f8ce81117c0a028865c8f63b37c61147eb94c9b134"
+    },
+    {
+      "clip_id": "fake_hard_001",
+      "spatial": 0.9995492100715637,
+      "temporal": 0.8809885813613739,
+      "evaluated_at": "2026-11-05T12:56:49.834642+00:00",
+      "video_sha256": "9e276ef0cd43146926a385788fcbec5be232e2c8847374db981a22046d35374b"
+    },
+    {
+      "clip_id": "fake_hard_002",
+      "spatial": 0.6554016709327698,
+      "temporal": 0.9798320225447091,
+      "evaluated_at": "2026-11-05T12:57:29.516253+00:00",
+      "video_sha256": "29d53c26505a31a8e2086a8048ca33a51889141c3c611c9989a4ae533c4e60e0"
+    },
+    {
+      "clip_id": "fake_hard_003",
+      "spatial": 0.9999316215515137,
+      "temporal": 0.9913687157096873,
+      "evaluated_at": "2026-11-05T12:58:05.918132+00:00",
+      "video_sha256": "ea2f44bf802091cf09e1f5a330b7f10259c4271e906bb058087af94b845c6a4b"
+    },
+    {
+      "clip_id": "fake_hard_004",
+      "spatial": 0.6844978570938111,
+      "temporal": 0.9696117347857333,
+      "evaluated_at": "2026-11-05T12:58:48.043165+00:00",
+      "video_sha256": "940722b3428213dfb9d62e9bf844e5bf2edb5bc0a637761a2d4dd357951f1bf8"
+    },
+    {
+      "clip_id": "fake_medium_001",
+      "spatial": 0.6806267559528351,
+      "temporal": 0.9490780639347721,
+      "evaluated_at": "2026-11-05T12:53:43.424076+00:00",
+      "video_sha256": "b43a5e64f4cb12d94213e00071532b1626e45485a4de06e03f98c4da9b0c46ad"
+    },
+    {
+      "clip_id": "fake_medium_002",
+      "spatial": 0.9977052807807922,
+      "temporal": 0.9886015322114149,
+      "evaluated_at": "2026-11-05T12:54:40.127514+00:00",
+      "video_sha256": "05e1a286041a62ee36616525821e0501fb61d48079245859de5ba9a017dc219b"
+    },
+    {
+      "clip_id": "fake_medium_003",
+      "spatial": 0.5794457629323005,
+      "temporal": 0.9134090112487896,
+      "evaluated_at": "2026-11-05T12:55:24.879469+00:00",
+      "video_sha256": "9ecf55fc660d1f6f575baf073f28046c739b98f67772b8294e2dd3b65bfb2ca4"
+    },
+    {
+      "clip_id": "fake_medium_004",
+      "spatial": 0.9993261456489563,
+      "temporal": 0.9938027946869532,
+      "evaluated_at": "2026-11-05T12:56:10.443441+00:00",
+      "video_sha256": "00316cfc2aafdd647904f58a3fcbfbadde45d1e268ccc9c3872eda3007f036ac"
+    },
+    {
+      "clip_id": "real_001",
+      "spatial": 0.13154726177453996,
+      "temporal": 0.9333724762540455,
+      "evaluated_at": "2026-11-05T12:46:11.887582+00:00",
+      "video_sha256": "b5de25829fc56067fdcce25ca6a981648f7afb91c539c80e05cf924fdfc50467"
+    },
+    {
+      "clip_id": "real_002",
+      "spatial": 0.3134259391576052,
+      "temporal": 0.9535776116647013,
+      "evaluated_at": "2026-11-05T12:46:38.551597+00:00",
+      "video_sha256": "08e7432f2d8c7686e4afe346d88e2ff9270031e8ce24f16b1bd3196a357ab5ce"
+    },
+    {
+      "clip_id": "real_003",
+      "spatial": 0.23749924674630166,
+      "temporal": 0.9478374184866132,
+      "evaluated_at": "2026-11-05T12:47:05.225859+00:00",
+      "video_sha256": "58ab739a1479631d2d90fd747842b210bb200c768c63215a9980116ec67081f6"
+    },
+    {
+      "clip_id": "real_004",
+      "spatial": 0.10853590480983258,
+      "temporal": 0.5074485274003397,
+      "evaluated_at": "2026-11-05T12:47:33.195327+00:00",
+      "video_sha256": "3cddf7d15dbc82515e92349016e6d4b507c524172e916b49ebfd99ad176cb390"
+    },
+    {
+      "clip_id": "real_005",
+      "spatial": 0.25436154194176197,
+      "temporal": 0.9649320255037716,
+      "evaluated_at": "2026-11-05T12:47:59.604749+00:00",
+      "video_sha256": "af17c6965e86874ca141521a2d0d95be4243f1ea89a82b443e023d2067f8492f"
+    },
+    {
+      "clip_id": "real_006",
+      "spatial": 0.004175971180666238,
+      "temporal": 0.14343676485921125,
+      "evaluated_at": "2026-11-05T12:48:27.777398+00:00",
+      "video_sha256": "93e17b0b1f5cdf0a82e250ac677ca6fe2dec627f0d6bdc320f2bc110fb2a127e"
+    },
+    {
+      "clip_id": "real_007",
+      "spatial": 0.011240487126633525,
+      "temporal": 0.5105211924468481,
+      "evaluated_at": "2026-11-05T12:48:54.882736+00:00",
+      "video_sha256": "f9e80c8f60c80ebb3a4cd2a000f605d46609176eb37b535951c789c6523bf9b4"
+    },
+    {
+      "clip_id": "real_008",
+      "spatial": 0.17848219014704228,
+      "temporal": 0.8018975380715672,
+      "evaluated_at": "2026-11-05T12:49:21.496178+00:00",
+      "video_sha256": "f646abd704c7a95901720faee1586b41d112183d7d248ba944940f1bd20930e6"
+    },
+    {
+      "clip_id": "real_009",
+      "spatial": 0.03980069477111101,
+      "temporal": 0.9867419988284768,
+      "evaluated_at": "2026-11-05T12:49:48.104280+00:00",
+      "video_sha256": "be0c4efc0c6591721db91b9b17699d4cc0fbfe7c5928ac6e57749637a5c58c6c"
+    },
+    {
+      "clip_id": "real_010",
+      "spatial": 0.2998450696468353,
+      "temporal": 0.7535098162213487,
+      "evaluated_at": "2026-11-05T12:50:14.662731+00:00",
+      "video_sha256": "17b0e0873a3e46d7dfc906546aa2f586803a029b3bf8bd0ea800d63c6519a5c7"
+    },
+    {
+      "clip_id": "real_011",
+      "spatial": 0.018141847988590597,
+      "temporal": 0.8598886571522811,
+      "evaluated_at": "2026-11-05T12:50:41.750845+00:00",
+      "video_sha256": "d29c816fa921d046bd2ee8e72130b5591fedffa73ee7f87d976f362ac5195f2c"
+    },
+    {
+      "clip_id": "real_012",
+      "spatial": 0.0028018632903695105,
+      "temporal": 0.771985343783214,
+      "evaluated_at": "2026-11-05T12:51:08.023925+00:00",
+      "video_sha256": "0f1563a63602b0297e46ab7970bf897c2c9c9c7059ba74616ac3d902e1c51e7b"
+    }
+  ]
+}

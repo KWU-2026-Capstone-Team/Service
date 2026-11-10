@@ -1,5 +1,7 @@
 # VeriVid Android
 
+다른 Windows 노트북의 전시 준비는 [GitHub 전시 설치 안내](../exhibition/README.md)를 확인하세요. 설치용 스크립트와 바로 설치할 시연 APK가 포함되어 있습니다.
+
 Service 저장소의 별도 Android 브랜치 인계·빌드 방법은 [팀 인계 안내](docs/service-handoff.md)를 먼저 확인하세요. Android Studio에서는 이 `VeriVidAndroid` 폴더를 엽니다.
 
 Kotlin + Jetpack Compose로 구현한 네이티브 Android 앱입니다. 화면 녹화와 플로팅 버튼도 Kotlin 네이티브 계층에서 동작합니다. `app/src/main/assets`의 기존 웹 파일은 디자인 참고용으로만 남아 있으며 앱 실행 화면에서는 사용하지 않습니다.

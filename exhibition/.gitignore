@@ -1,0 +1,16 @@
+/runtime/
+/runtime-data/
+/backend/
+/model/
+/game-reference/
+/.downloads/
+/third-party/
+/android/platform-tools/
+/test-fixtures/
+__pycache__/
+*.pyc
+*.log
+*.sqlite3*
+*.jks
+*.keystore
+.env*
